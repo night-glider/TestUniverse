@@ -40,8 +40,8 @@ func _process(delta):
 		$Camera2D.zoom.y -= 0.1
 	
 	
-	generate()
-	update()
+	#generate()
+	#update()
 	
 	pass
 
