@@ -40,8 +40,8 @@ func _process(delta):
 		$Camera2D.zoom.y -= 0.1
 	
 	
-	#generate()
-	#update()
+	generate()
+	update()
 	
 	pass
 
@@ -49,6 +49,9 @@ func create_room(room_id):
 	var index = rand.randi_range(0, free_pool.size()-1)
 	var vec = free_pool[index]
 	rooms_coords[room_id] = vec
+	if check_free(vec) < 3:
+		create_room(room_id)
+		return
 	free_pool.remove(index)
 	var right = Vector2(vec.x + ROOM_SIZE * 2, vec.y)
 	var left = Vector2(vec.x - ROOM_SIZE * 2, vec.y)
@@ -67,6 +70,21 @@ func create_room(room_id):
 	if not(down in free_pool) and not(down in rooms_coords):
 		free_pool.append(down)
 
+func check_free(vec:Vector2):
+	var right = Vector2(vec.x + ROOM_SIZE * 2, vec.y)
+	var left = Vector2(vec.x - ROOM_SIZE * 2, vec.y)
+	var up = Vector2(vec.x, vec.y - ROOM_SIZE * 2)
+	var down = Vector2(vec.x, vec.y + ROOM_SIZE * 2)
+	var cnt = 0
+	if not left in rooms_coords:
+		cnt+=1
+	if not right in rooms_coords:
+		cnt+=1
+	if not up in rooms_coords:
+		cnt+=1
+	if not down in rooms_coords:
+		cnt+=1
+	return cnt
 
 func generate():
 	rooms.clear()
