@@ -17,7 +17,10 @@ func _ready():
 func _draw():
 	for element in ships:
 		var pos = RoomManager.rooms_coords[element.room_id] + Vector2(50, 50) + element.pos/20
-		draw_circle(pos, 10, Color.red)
+		if element.enabled:
+			draw_circle(pos, 10, Color.red)
+		else:
+			draw_circle(pos, 10, Color.gray)
 		pass
 
 func _process(delta):

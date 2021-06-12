@@ -14,15 +14,17 @@ func init_ship(ship_id):
 	position = global_ship_id.pos
 	target = global_ship_id.target
 	gate_pos = global_ship_id.gate_pos
+	if gate_pos == Vector2(0,0):
+		OS.alert("ФАТАЛЬНАЯ ОШИБКА. У РЕАЛЬНОЙ КОПИИ ПОЗИЦИЯ ВРАТ НАХОДИТСЯ В ТОЧКЕ (0,0)")
 	pass
 
 func use_gate():
-	global_ship_id.use_gate()
 	global_ship_id.enabled = true
 	queue_free()
 
 func _process(delta):
 	if position.distance_squared_to(gate_pos) < 1:
 		use_gate()
+		return
 	position = position.move_toward(gate_pos, spd)
 	global_ship_id.pos = position
