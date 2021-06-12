@@ -1,14 +1,18 @@
 extends Node2D
 
-const ROOM_NUMBER:int = 200
+const ROOM_NUMBER:int = 100
 const ROOM_SIZE:int = 100
 var rooms = []
+var sectors = []
 var rooms_coords = []
 var free_pool = []
 var rand = RandomNumberGenerator.new()
 
 func _ready():
 	rand.randomize()
+	for i in ROOM_NUMBER:
+		sectors.append(sector_class.new())
+		sectors[i].id = i
 	generate()
 	
 func _draw():
@@ -21,37 +25,17 @@ func _draw():
 			draw_line( Vector2(rooms_coords[i].x + ROOM_SIZE/2, rooms_coords[i].y), Vector2(rooms_coords[i].x + ROOM_SIZE/2, rooms_coords[i].y - 100), Color.white)
 		if rooms[i][2] != -1:
 			draw_line( Vector2(rooms_coords[i].x, rooms_coords[i].y + ROOM_SIZE/2), Vector2(rooms_coords[i].x-100, rooms_coords[i].y + ROOM_SIZE/2), Color.white)
-	
 
 func _process(delta):
-	if Input.is_action_pressed("ui_up"):
-		$Camera2D.position.y -=10
-	if Input.is_action_pressed("ui_down"):
-		$Camera2D.position.y +=10
-	if Input.is_action_pressed("ui_left"):
-		$Camera2D.position.x -=10
-	if Input.is_action_pressed("ui_right"):
-		$Camera2D.position.x +=10
-	if Input.is_action_pressed("ui_accept"):
-		$Camera2D.zoom.x += 0.1
-		$Camera2D.zoom.y += 0.1
-	if Input.is_action_pressed("ui_cancel"):
-		$Camera2D.zoom.x -= 0.1
-		$Camera2D.zoom.y -= 0.1
-	
-	
-	generate()
-	update()
+	#generate()
+	#update()
 	
 	pass
 
 func create_room(room_id):
-	var index = rand.randi_range(0, free_pool.size()-1)
+	var index = choose_target()
 	var vec = free_pool[index]
 	rooms_coords[room_id] = vec
-	if check_free(vec) < 3:
-		create_room(room_id)
-		return
 	free_pool.remove(index)
 	var right = Vector2(vec.x + ROOM_SIZE * 2, vec.y)
 	var left = Vector2(vec.x - ROOM_SIZE * 2, vec.y)
@@ -85,6 +69,13 @@ func check_free(vec:Vector2):
 	if not down in rooms_coords:
 		cnt+=1
 	return cnt
+
+func choose_target()->int:
+	
+	if rand.randi_range(0,1) == 0:
+		return rand.randi_range(0,min(10, free_pool.size()-1))
+	else:
+		return rand.randi_range(max(0, (free_pool.size()-1)-10), (free_pool.size()-1))
 
 func generate():
 	rooms.clear()
@@ -122,4 +113,3 @@ func generate():
 			
 		if down > -1:
 			rooms[i][3] = down
-		

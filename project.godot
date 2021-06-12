@@ -8,10 +8,33 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Object",
+"class": "sector_class",
+"language": "GDScript",
+"path": "res://classes/sector.gd"
+}, {
+"base": "Object",
+"class": "ship_class",
+"language": "GDScript",
+"path": "res://classes/ship.gd"
+} ]
+_global_script_class_icons={
+"sector_class": "",
+"ship_class": ""
+}
+
 [application]
 
 config/name="TestUniverse"
+run/main_scene="res://scenes/main_scene.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+RoomManager="*res://objects/room_manager.gd"
+ShipManager="*res://objects/ship_manager.gd"
+Global="*res://objects/global.tscn"
 
 [physics]
 
@@ -19,5 +42,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/driver/driver_name="GLES3"
 environment/default_environment="res://default_env.tres"
