@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/debug_info.gd" type="Script" id=1]
+
+[node name="debug_info" type="Label"]
+margin_right = 40.0
+margin_bottom = 14.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_top = 140.065
+margin_right = 99.0
+margin_bottom = 253.065
+readonly = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

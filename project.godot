@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Object",
+"class": "player_class",
+"language": "GDScript",
+"path": "res://classes/player.gd"
+}, {
+"base": "Object",
 "class": "sector_class",
 "language": "GDScript",
 "path": "res://classes/sector.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://classes/ship.gd"
 } ]
 _global_script_class_icons={
+"player_class": "",
 "sector_class": "",
 "ship_class": ""
 }
@@ -27,14 +33,13 @@ _global_script_class_icons={
 [application]
 
 config/name="TestUniverse"
-run/main_scene="res://scenes/main_scene.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://scenes/main_menu.tscn"
+config/icon="res://sprites/ship.png"
 
 [autoload]
 
-RoomManager="*res://objects/room_manager.gd"
-ShipManager="*res://objects/ship_manager.gd"
 Global="*res://objects/global.tscn"
+Multiplayer="*res://objects/multiplayer.tscn"
 
 [input]
 

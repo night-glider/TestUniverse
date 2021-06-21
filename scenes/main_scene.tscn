@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/main_scene.gd" type="Script" id=1]
 [ext_resource path="res://objects/global_map_camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/global_map_drawer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/debug_info.tscn" type="PackedScene" id=4]
 
 [node name="global_map" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 2 )]
+
+[node name="Node2D" parent="." instance=ExtResource( 3 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -27,5 +31,11 @@ margin_bottom = 25.1892
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="debug_info" parent="CanvasLayer" instance=ExtResource( 4 )]
+margin_left = 0.396851
+margin_top = 68.6552
+margin_right = 40.3969
+margin_bottom = 82.6552
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]

@@ -9,28 +9,10 @@ var free_pool = []
 var rand = RandomNumberGenerator.new()
 
 func _ready():
-	rand.randomize()
 	for i in ROOM_NUMBER:
 		sectors.append(sector_class.new())
 		sectors[i].id = i
-	generate()
-	
-func _draw():
-	var default_font = Control.new().get_font("font")
-	for i in ROOM_NUMBER:
-		draw_rect( Rect2(rooms_coords[i], Vector2(ROOM_SIZE, ROOM_SIZE)), Color.white)
-		
-		draw_string(default_font, Vector2(rooms_coords[i].x, rooms_coords[i].y + 32), str(i), Color.black)
-		if rooms[i][1] != -1:
-			draw_line( Vector2(rooms_coords[i].x + ROOM_SIZE/2, rooms_coords[i].y), Vector2(rooms_coords[i].x + ROOM_SIZE/2, rooms_coords[i].y - 100), Color.white)
-		if rooms[i][2] != -1:
-			draw_line( Vector2(rooms_coords[i].x, rooms_coords[i].y + ROOM_SIZE/2), Vector2(rooms_coords[i].x-100, rooms_coords[i].y + ROOM_SIZE/2), Color.white)
 
-func _process(delta):
-	#generate()
-	#update()
-	
-	pass
 
 func create_room(room_id):
 	var index = choose_target()
@@ -113,3 +95,9 @@ func generate():
 			
 		if down > -1:
 			rooms[i][3] = down
+
+func _process(delta):
+	for element in sectors:
+		element.serialize()
+	for element in Multiplayer.players:
+		sectors[element.current_room].deserialize()

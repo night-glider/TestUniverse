@@ -17,6 +17,4 @@ func _ready():
 
 
 func _on_Button_pressed():
-	Global.current_room = $CanvasLayer/LineEdit.text.to_int()
-	get_tree().change_scene("res://scenes/world.tscn")
-	
+	Global.change_sector($CanvasLayer/LineEdit.text.to_int()) 

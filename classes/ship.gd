@@ -7,17 +7,19 @@ var spd:float = 1
 var pos:Vector2 = Vector2(0,0)
 var target:int = 0
 var gate_pos:Vector2 = Vector2(0,0)
+var id
 
 func init(start_room_id:int):
+	id = get_instance_id()
 	room_id = start_room_id
-	RoomManager.sectors[room_id].ship_enters(self)
+	Multiplayer.RoomManager.sectors[room_id].ship_enters(self)
 	init_instruction()
 	pass
 
 func use_gate():
 	gate_pos = Vector2(0,0)
-	RoomManager.sectors[room_id].ship_leaves(self)
-	room_id = RoomManager.rooms[room_id][target]
+	Multiplayer.RoomManager.sectors[room_id].ship_leaves(self)
+	room_id = Multiplayer.RoomManager.rooms[room_id][target]
 	if room_id < 0:
 		OS.alert("ФАТАЛЬНАЯ ОШИБКА. КОРАБЛЬ ПЕРЕМЕСТИЛСЯ В НЕБЫТИЕ. В СЕКТОР С ИНДЕКСОМ -1")
 	match target:
@@ -30,13 +32,13 @@ func use_gate():
 		3:
 			pos = Vector2(0, -1000)
 	init_instruction()
-	RoomManager.sectors[room_id].ship_enters(self)
+	Multiplayer.RoomManager.sectors[room_id].ship_enters(self)
 
 func init_instruction():
 	var choice = [0, 1, 2, 3]
 	choice.shuffle()
 	for i in choice:
-		if RoomManager.rooms[room_id][i] != -1:
+		if Multiplayer.RoomManager.rooms[room_id][i] != -1:
 			target = i
 			match target:
 				0:

@@ -5,32 +5,31 @@ var virtual = true
 var id:int
 var ships = []
 
-signal ship_enters(ship_id)
-signal ship_leaves(ship_id)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-func ship_leaves(ship_id):
+func ship_leaves(ship_id:ship_class):
 	ships.erase(ship_id)
-	emit_signal("ship_leaves", ship_id)
 
-func ship_enters(ship_id):
+func ship_enters(ship_id:ship_class):
 	ships.append(ship_id)
-	emit_signal("ship_enters", ship_id)
+	ship_id.enabled = virtual
+	for element in Multiplayer.players:
+		if id == element.current_room:
+			Multiplayer.rpc_id(element.peer_id,"ship_enters_to_sector", ship_id.enabled, ship_id.room_id, ship_id.spd, ship_id.pos, ship_id.target, ship_id.gate_pos, ship_id.id)
+	
 
 func serialize():
+	if virtual == true:
+		return
 	virtual = true
 	for element in ships:
 		element.enabled = true
 
 func deserialize():
+	if virtual == false:
+		return
 	virtual = false
 	for element in ships:
 		element.enabled = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

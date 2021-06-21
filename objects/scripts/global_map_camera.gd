@@ -15,8 +15,6 @@ func _process(delta):
 	if Input.is_action_just_released("zoom_in"):
 		zoom.x -= 0.1
 		zoom.y -= 0.1
-		
-	print(Performance.get_monitor(Performance.TIME_FPS))
 
 
 
